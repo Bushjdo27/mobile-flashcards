@@ -23,13 +23,6 @@ class WelcomeScreen extends Component {
       })
 
     })
-    // AsyncStorage.removeItem('UdaciCards:UserInfor').then(() => {
-    //   clearLocalNotification().then(() => {
-    //     console.log('Remove Success')
-    //   })
-
-    // });
-
   }
   render() {
     return (
