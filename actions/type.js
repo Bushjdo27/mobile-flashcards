@@ -1,0 +1,11 @@
+export const DECK_DATA_LOCAL = 'DECK_DATA_LOCAL';
+export const ALL_DECK = 'ALL_DECK';
+export const ADD_QUESTION = 'ADD_QUESTION';
+export const ADD_NEW_DECK = 'ADD_NEW_DECK';
+export const UPDATE_CORRECT_ANWSER = 'UPDATE_CORRECT_ANWSER';
+export const USER_INFOR = 'USER_INFOR';
+export const SET_USER_NOTIFICATION = 'SET_USER_NOTIFICATION';
+export const GET_USER_NOTIFICATION = 'GET_USER_NOTIFICATION'
+export const SET_USER_INFOR = 'SET_USER_INFOR';
+export const NOTIFICATION_KEYS = 'UdaciCards:notifications';
+export const USER_KEYS = 'UdaciCards:UserInfor';
