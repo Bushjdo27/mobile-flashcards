@@ -2,9 +2,7 @@ import { AsyncStorage, Dimensions } from 'react-native';
 import { Notifications, Permissions } from 'expo';
 import { DECK_DATA_LOCAL, NOTIFICATION_KEYS, USER_KEYS } from '../actions/type';
 
-// export const NOTIFICATION_KEYS = 'UdaciCards:notifications';
-// export const USER_KEYS = 'UdaciCards:UserInfor'
-// utils file 
+
 const DATA = {
   React: {
     title: 'React',
