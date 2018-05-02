@@ -49,9 +49,14 @@ export const addQuestion = (key , question) =>{
 
 export const addNewDeck = (key) =>{
  return async (dispatch) =>{
-   addDeck(key).then(()=>{
-        dispatch({type: ADD_NEW_DECK, payload : {key: key}});
-   })
+   try{
+      await addDeck(key)
+      dispatch({type: ADD_NEW_DECK, payload : {key: key}});
+      return 
+   }catch(e){
+     console.log('Add new deck fail')
+   }
+   
  }
 }
 

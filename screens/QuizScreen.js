@@ -69,6 +69,17 @@ class QuizScreen extends Component {
         })
     }
     
+    handleRestartQuiz = ()=>{
+        this.setState((prevState)=>{
+            return {
+                currentQuestion: 0,
+                submitAnswer: false,
+                correct: false,
+                numberCorrect : 0,
+                showAnswer: false
+            }
+        })
+    }
     handleComplete = ()=>{
       const {title , numberCorrect} = this.state;
       this.props.dispatch(updateCorrect(title , numberCorrect)).then(()=>{
@@ -124,12 +135,22 @@ class QuizScreen extends Component {
         if (showAnswer){
             if((currentQuestion + 1) === (Questions.length)){
                 return (
+                    <View style={styles.groupButton}>
+                    <TouchableOpacity
+                        style={btn.btnPrimary}
+                        onPress={this.handleRestartQuiz}
+                    >
+                        <Text style={{color: '#fff'}}>Restart Quiz</Text>
+                    </TouchableOpacity>
+
                     <TouchableOpacity
                         style={btn.btnPrimary}
                         onPress={this.handleComplete}
                     >
-                            <Text style={{color: '#fff'}}>Complete</Text>
+                        <Text style={{color: '#fff'}}>Done</Text>
                     </TouchableOpacity>
+                    </View>
+                    
                         )
             }
             return(
