@@ -63,6 +63,15 @@ class QuizScreen extends Component {
         })
     }
 
+    handleBackQuestion = ()=>{
+        this.setState((prevState)=>{
+            return {
+                showAnswer:false , 
+                submitAnswer:false,
+            }
+        })
+    }
+
     handleShowAnswer = ()=>{
         this.setState((prevState)=>{
             return {showAnswer: true}
@@ -154,6 +163,15 @@ class QuizScreen extends Component {
                         )
             }
             return(
+                <View style={styles.groupButton}>
+                <TouchableOpacity
+                    style={!correct ? btn.btnPrimary : btn.btnDisable}
+                    onPress={this.handleBackQuestion}
+                    disabled={correct}
+                >
+                    <Text style={{color: '#fff'}}>Go Back Question</Text>
+                             
+                </TouchableOpacity>
                 <TouchableOpacity
                     style={btn.btnPrimary}
                     onPress={this.handleNextQuestion}
@@ -161,6 +179,7 @@ class QuizScreen extends Component {
                     <Text style={{color: '#fff'}}>Next Question</Text>
                              
                 </TouchableOpacity>
+                </View>
             )
         }else if(!showAnswer){
             
