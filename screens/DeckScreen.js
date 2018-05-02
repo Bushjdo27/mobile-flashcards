@@ -12,6 +12,7 @@ class DeckScreen extends Component {
 
     render(){
         let { title } = this.props.navigation.state.params.singleDeck;
+        console.log(title)
         return(
             <View style={styles.container}>
             {this.props.allDeck ? 

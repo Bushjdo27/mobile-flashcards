@@ -24,7 +24,8 @@ class QuizScreen extends Component {
             submitAnswer: false,
             correct: false,
             numberCorrect : 0,
-            title: ""
+            title: "",
+            showAnswer: false
         }
     }
     componentDidMount(){
@@ -41,14 +42,16 @@ class QuizScreen extends Component {
                 return {
                     submitAnswer: true,
                     correct: true,
-                    numberCorrect: prevState.numberCorrect + 1
+                    numberCorrect: prevState.numberCorrect + 1,
+                    showAnswer:true
                 }
             })
             
         }else{
             this.setState(()=>{
                 return {
-                    submitAnswer: true
+                    submitAnswer: true,
+                    showAnswer:true
                 }
             })
         }
@@ -56,7 +59,13 @@ class QuizScreen extends Component {
 
     handleNextQuestion = ()=>{
         this.setState((prevState)=>{
-            return {currentQuestion: prevState.currentQuestion + 1 , submitAnswer: false , correct:false}
+            return {currentQuestion: prevState.currentQuestion + 1 , submitAnswer: false , correct:false ,showAnswer:false}
+        })
+    }
+
+    handleShowAnswer = ()=>{
+        this.setState((prevState)=>{
+            return {showAnswer: true}
         })
     }
     
@@ -67,8 +76,85 @@ class QuizScreen extends Component {
       })
     }
 
+    displayAnswerQuestion = ()=>{
+        let {submitAnswer , showAnswer , correct ,Questions ,currentQuestion} = this.state;
+        if(!submitAnswer && showAnswer){
+            return (
+                <View style={{flexDirection: 'row' , justifyContent:'center' , alignItems:'center'}}>
+                    <Text>Anwser is : </Text>
+                    <Text style={{fontSize: 25 , marginLeft: 10 , color:'#27ae60'}}>{Questions[currentQuestion].answer}</Text>
+                </View>
+            )
+        }else if(submitAnswer){
+            if(correct){
+                return <View style={styles.result}><Ionicons name="ios-checkmark-circle-outline" size={50} color="green"/><Text style={{marginTop: 20}}>Correct Answer</Text></View>
+            }else{
+                return <View style={styles.result}><Entypo name="circle-with-cross" size={50} color="red"/><Text style={{marginTop: 20}}>Wrong Answer</Text></View>
+            } 
+        }else if(!submitAnswer && !showAnswer){
+            return <Text style={{textAlign:'center'}}>{this.state.Questions[currentQuestion].question}</Text>
+        }
+    }
+
+    renderButtonAnswer = ()=>{
+        let {submitAnswer , showAnswer} = this.state;
+        if(!submitAnswer && !showAnswer){
+            return (
+            <View style={styles.groupButton}>
+                <TouchableOpacity 
+                    style={btn.btnCorrect}
+                    onPress={()=>{ this.handleAnswer('true')}}
+                >
+                    <Text style={{color:'#fff'}}>Correct</Text>
+                </TouchableOpacity>
+                <TouchableOpacity 
+                    style={btn.btnIncorrect}
+                    onPress={()=>{ this.handleAnswer('false')}}
+                >
+                    <Text style={{color:'#fff'}}>Incorrect</Text>
+                </TouchableOpacity>
+            </View>
+            )
+        }
+    }
+
+    renderButtonHelper = ()=>{
+        let {submitAnswer , showAnswer , correct ,Questions ,currentQuestion} = this.state;
+        
+        if (showAnswer){
+            if((currentQuestion + 1) === (Questions.length)){
+                return (
+                    <TouchableOpacity
+                        style={btn.btnPrimary}
+                        onPress={this.handleComplete}
+                    >
+                            <Text style={{color: '#fff'}}>Complete</Text>
+                    </TouchableOpacity>
+                        )
+            }
+            return(
+                <TouchableOpacity
+                    style={btn.btnPrimary}
+                    onPress={this.handleNextQuestion}
+                >
+                    <Text style={{color: '#fff'}}>Next Question</Text>
+                             
+                </TouchableOpacity>
+            )
+        }else if(!showAnswer){
+            
+            return (
+                <TouchableOpacity
+                    style={btn.btnPrimary}
+                    onPress={this.handleShowAnswer}
+                >
+                        <Text style={{color: '#fff'}}>Show Answer</Text>
+                </TouchableOpacity>
+            )
+        }
+    }
     render(){
-        const {currentQuestion , Questions} = this.state;
+        const {currentQuestion , Questions , showAnswer ,submitAnswer} = this.state;
         return (
             <View style={styles.container}>
             {Questions.length > 0 && (
@@ -78,45 +164,11 @@ class QuizScreen extends Component {
                     <Text style={{marginTop:20}}>Correct : {`${this.state.numberCorrect}`}</Text>
                 </View>
                 <View style={{flex:1.5 , alignItems:'center'}}>
-                    {this.state.submitAnswer ?
-                        this.state.correct ? <View style={styles.result}><Ionicons name="ios-checkmark-circle-outline" size={50} color="green"/><Text style={{marginTop: 20}}>Correct Answer</Text></View> : <View style={styles.result}><Entypo name="circle-with-cross" size={50} color="red"/><Text style={{marginTop: 20}}>Wrong Answer</Text></View>
-                    : <Text style={{textAlign:'center'}}>{this.state.Questions[currentQuestion].question}</Text>
-                    }
-                    {!this.state.submitAnswer &&
-                        <View style={styles.groupButton}>
-                            <TouchableOpacity 
-                                style={btn.btnCorrect}
-                                onPress={()=>{ this.handleAnswer('true')}}
-                            >
-                                <Text style={{color:'#fff'}}>Correct</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity 
-                                style={btn.btnIncorrect}
-                                onPress={()=>{ this.handleAnswer('false')}}
-                            >
-                                <Text style={{color:'#fff'}}>Incorrect</Text>
-                            </TouchableOpacity>
-                    </View>
-                    }
+                    {this.displayAnswerQuestion()}
+                    {this.renderButtonAnswer()}
                 </View>
                 <View style={{flex:1 , alignItems:'center'}}>
-                    {(currentQuestion+1 === Questions.length && this.state.submitAnswer) ? 
-                        <TouchableOpacity
-                            style={btn.btnPrimary}
-                            onPress={this.handleComplete}
-                        >
-                            <Text style={{color: '#fff'}}>Complete</Text>
-                        </TouchableOpacity>
-                        :
-                        <TouchableOpacity
-                            style={this.state.submitAnswer ? btn.btnPrimary : btn.btnDisable}
-                            onPress={this.handleNextQuestion}
-                            disabled={this.state.submitAnswer ? false : true}
-                        >
-                            
-                            {currentQuestion+1 === Questions.length ? <Text style={{color: '#fff'}}>Last Question</Text> : <Text style={{color: '#fff'}}>Next Question</Text>}
-                        </TouchableOpacity>
-                    }
+                    {this.renderButtonHelper()}
                 </View>
                 
                 </View>
