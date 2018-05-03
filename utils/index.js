@@ -225,33 +225,3 @@ export const getNotificationInfor = async () => {
 }
 
 
-/*
-export const setLocalNotificationLearn = ()=>{
-  AsyncStorage.getItem(NOTIFICATION_KEYS)
-      .then(JSON.parse)
-      .then((data)=>{
-          if(data === null){
-              Permissions.askAsync(Permissions.NOTIFICATIONS)
-                  .then(({status})=>{
-                      if(status === 'granted'){
-                          Notifications.cancelAllScheduledNotificationsAsync()
-                          let tomorrow = new Date();
-                          tomorrow.setDate(tomorrow.getDate() + 1);
-                          tomorrow.setHours(20);
-                          tomorrow.setMinutes(0);
-                          Notifications.scheduleLocalNotificationAsync(
-                              createLocalNotification(),
-                              {
-                                  time: tomorrow,
-                                  repeat: 'day'
-                              }
-                          )
-                          AsyncStorage.setItem(NOTIFICATION_KEYS , JSON.stringify(true))
-
-                      }
-                  })
-          }
-      })
-
-}
-*/
