@@ -142,7 +142,7 @@ class QuizScreen extends Component {
         let {submitAnswer , showAnswer , correct ,Questions ,currentQuestion} = this.state;
         
         if (showAnswer){
-            if((currentQuestion + 1) === (Questions.length)){
+            if((currentQuestion + 1) === (Questions.length) && submitAnswer){
                 return (
                     <View style={styles.groupButton}>
                     <TouchableOpacity
@@ -161,6 +161,20 @@ class QuizScreen extends Component {
                     </View>
                     
                         )
+            }else if((currentQuestion + 1) === (Questions.length) && !submitAnswer){
+                return (
+                    <View style={styles.groupButton}>
+                <TouchableOpacity
+                    style={!correct ? btn.btnPrimary : btn.btnDisable}
+                    onPress={this.handleBackQuestion}
+                    disabled={correct}
+                >
+                    <Text style={{color: '#fff'}}>Go Back Question</Text>
+                             
+                </TouchableOpacity>
+                
+                </View>
+                )
             }
             return(
                 <View style={styles.groupButton}>

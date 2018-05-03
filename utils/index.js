@@ -8,21 +8,21 @@ const DATA = {
     title: 'React',
     questions: [
       {
-        question: 'What is React?',
+        question: 'ReactJS is front-end language?',
         answer: 'true'
       },
       {
-        question: 'Where do you make Ajax requests in React?',
+        question: 'We should make setState in render function ?',
         answer: 'false'
       }
     ],
     correctAnwser: 0
   },
-  JavaScript: {
-    title: 'JavaScript',
+  React_Native: {
+    title: 'React_Native',
     questions: [
       {
-        question: 'What is a closure?',
+        question: 'React Native can build app for android and IOS ?',
         answer: 'true'
       }
     ],

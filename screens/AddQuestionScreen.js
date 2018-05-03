@@ -66,7 +66,7 @@ class FormAddQuestion extends Component {
                 />
                 <TextInput
                     style={input.field}
-                    placeholder="Enter your answer : True/False"
+                    placeholder="Enter your answer : true/false"
                     onChangeText={this.handleAnswerChange}
                     value={this.state.answer}
                     autoCapitalize='none'

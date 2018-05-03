@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, AsyncStorage } from 'react-native';
-//import { Constants } from 'expo';
 import { connect } from 'react-redux';
 import { getAllDeck, getUser } from '../actions';
 import { setLocalNotification, clearLocalNotification } from '../utils'
@@ -13,15 +12,11 @@ class WelcomeScreen extends Component {
     this.props.dispatch(getAllDeck()).then(() => {
       this.props.dispatch(getUser()).then(() => {
         setLocalNotification().then(() => {
-          //just for show logo :)
           setTimeout(() => {
             this.props.navigation.navigate('AppMain')
           }, 800)
         })
-
-
       })
-
     })
   }
   render() {
